@@ -1,0 +1,84 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Question {
+    private String question;
+    private List<String> options;
+    private int correctOption;
+
+    public Question(String question, List<String> options, int correctOption) {
+        this.question = question;
+        this.options = options;
+        this.correctOption = correctOption;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public List<String> getOptions() {
+        return options;
+    }
+
+    public int getCorrectOption() {
+        return correctOption;
+    }
+}
+
+class Quiz {
+    private List<Question> questions;
+
+    public Quiz() {
+        questions = new ArrayList<>();
+    }
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+}
+
+public class OnlineQuizManagementSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Sample Quiz
+        Quiz quiz = new Quiz();
+        quiz.addQuestion(new Question("Which data structure is used for implementing recursion?",
+                List.of("A. Queue", "B. Stack", "C. List", "D. Array"), 1));
+        quiz.addQuestion(new Question("Who is the father of computer?",
+                List.of("A. Charles Newman", "B. Charles Babbage", "C. Henry Babbage", "D. Henry luce"), 1));
+        quiz.addQuestion(new Question("What is 20 * 5?",
+                List.of("A. 90", "B. 100", "C. 55", "D. 60"), 1));
+
+        System.out.println("Welcome to the Online Quiz Management System!");
+        System.out.println("Quiz Time!");
+
+        int score = 0;
+        List<Question> questions = quiz.getQuestions();
+        for (Question q : questions) {
+            System.out.println(q.getQuestion());
+            for (String option : q.getOptions()) {
+                System.out.println(option);
+            }
+            System.out.print("Enter your choice (A/B/C/D): ");
+            String choice = scanner.nextLine().toUpperCase();
+            int selectedOption = choice.charAt(0) - 'A';
+            if (selectedOption == q.getCorrectOption()) {
+                System.out.println("Correct!");
+                score++;
+            } else {
+                System.out.println("Incorrect!");
+            }
+        }
+
+        System.out.println("Quiz completed!");
+        System.out.println("Your Score: " + score + "/" + questions.size());
+
+        scanner.close();
+    }
+}
